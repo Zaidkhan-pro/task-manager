@@ -1,6 +1,6 @@
 tasks = []
 
-def add_task(title, priority="normal"):              # ← CHANGED
+def add_task(title, priority="normal"):
     task = {"id": len(tasks) + 1, "title": title, "done": False, "priority": priority}
     tasks.append(task)
     print(f"Task added: {title} [{priority}]")
@@ -21,10 +21,14 @@ def complete_task(task_id):
             return
     print("Task not found.")
 
-def delete_task(task_id):                            # ← NEW
+def delete_task(task_id):
     global tasks
     tasks = [t for t in tasks if t["id"] != task_id]
     print(f"Task {task_id} deleted.")
+
+def clear_all_tasks():                               # ← BAD FUNCTION (buggy)
+    tasks = []                                       # ← bug: doesn't clear global list
+    print("All tasks cleared.")
 
 def main():
     while True:
@@ -32,31 +36,26 @@ def main():
         print("1. Add task")
         print("2. List tasks")
         print("3. Complete a task")
-<<<<<<< HEAD
-        print("4. Delete a task")                    # ← NEW
-        print("5. Quit")                             # ← CHANGED
-=======
-        print("4. Quit")                             # ← still 4, no delete here
->>>>>>> feature/task-priority
+        print("4. Delete a task")
+        print("5. Clear all tasks")                  # ← NEW OPTION
+        print("6. Quit")                             # ← CHANGED from 5
         choice = input("Choose: ")
 
         if choice == "1":
             title = input("Task title: ")
-            priority = input("Priority (low/normal/high): ")   # ← NEW
+            priority = input("Priority (low/normal/high): ")
             add_task(title, priority)
         elif choice == "2":
             list_tasks()
         elif choice == "3":
             task_id = int(input("Task ID to complete: "))
             complete_task(task_id)
-<<<<<<< HEAD
-        elif choice == "4":                          # ← NEW
+        elif choice == "4":
             task_id = int(input("Task ID to delete: "))
             delete_task(task_id)
-        elif choice == "5":                          # ← CHANGED
-=======
-        elif choice == "4":
->>>>>>> feature/task-priority
+        elif choice == "5":                          # ← NEW
+            clear_all_tasks()
+        elif choice == "6":                          # ← CHANGED from 5
             break
 
 if __name__ == "__main__":
